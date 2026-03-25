@@ -579,17 +579,24 @@ function openSettings() {
       ${state.extraItems.length === 0
         ? `<div style="font-size:12px;color:var(--text-muted);padding:8px 0">아직 추가된 항목이 없어요</div>`
         : state.extraItems.map(item => `
-          <div class="settings-item">
-            <div class="settings-item-left">
+          <div class="settings-item" style="grid-template-columns:1fr">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               <span class="settings-item-name">${item.name}</span>
-              <span class="settings-item-default">직접 추가한 항목</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <div class="settings-input-wrap">
-                <input type="text" id="extra_${item.key}" value="${item.fixed?item.fixed.toLocaleString('ko-KR'):''}" placeholder="0" inputmode="numeric" oninput="formatCommaInput(this)" />
-                <span>원</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="settings-input-wrap">
+                  <input type="text" id="extra_${item.key}" value="${item.fixed?item.fixed.toLocaleString('ko-KR'):''}" placeholder="0" inputmode="numeric" oninput="formatCommaInput(this)" />
+                  <span>원</span>
+                </div>
+                <button class="btn-reset" style="color:var(--red);border-color:rgba(248,113,113,0.3)" onclick="deleteExtraItem('${item.key}')">삭제</button>
               </div>
-              <button class="btn-reset" style="color:var(--red);border-color:rgba(248,113,113,0.3)" onclick="deleteExtraItem('${item.key}')">삭제</button>
+            </div>
+            <div style="margin-top:8px">
+              <div class="input-wrap" style="padding:7px 12px">
+                <input type="text" id="extra_acct_${item.key}"
+                  value="${item.account||''}"
+                  placeholder="계좌번호 입력 (선택사항)"
+                  style="font-size:12px;font-weight:400" />
+              </div>
             </div>
           </div>`).join('')
       }
@@ -603,6 +610,11 @@ function openSettings() {
         </div>
         <button class="btn-save" style="padding:9px 16px;font-size:12px" onclick="addExtraItem()">+ 추가</button>
       </div>
+      <div style="margin-top:8px">
+        <div class="input-wrap" style="padding:7px 12px">
+          <input type="text" id="newItemAccount" placeholder="계좌번호 입력 (선택사항)" style="font-size:12px;font-weight:400" />
+        </div>
+      </div>
     </div>
     <button class="btn-settings-save" onclick="saveSettings()">설정 저장</button>
   `;
@@ -611,10 +623,12 @@ function openSettings() {
 
 function addExtraItem() {
   const nameEl=document.getElementById('newItemName'), amtEl=document.getElementById('newItemAmount');
+  const acctEl=document.getElementById('newItemAccount');
   const name=nameEl.value.trim(), fixed=parseInt(amtEl.value.replace(/[^0-9]/g,''))||0;
+  const account=acctEl.value.trim();
   if(!name){showToast('⚠️ 항목 이름을 입력해주세요');return;}
-  state.extraItems.push({key:'extra_'+Date.now(), name, fixed});
-  saveData(state); nameEl.value=''; amtEl.value='';
+  state.extraItems.push({key:'extra_'+Date.now(), name, fixed, account});
+  saveData(state); nameEl.value=''; amtEl.value=''; acctEl.value='';
   openSettings(); showToast(`✅ "${name}" 항목이 추가됐어요`);
 }
 function deleteExtraItem(key) {
@@ -644,6 +658,8 @@ function saveSettings() {
     const el=document.getElementById(`extra_${item.key}`); if(!el) return;
     const v=parseInt(el.value.replace(/[^0-9]/g,''));
     item.fixed=isNaN(v)?0:v;
+    const acctEl=document.getElementById(`extra_acct_${item.key}`);
+    if(acctEl) item.account=acctEl.value.trim();
   });
   saveData(state); renderItems(); renderMonths(); closeSettings(); showToast('✅ 항목 설정이 저장됐어요');
 }
