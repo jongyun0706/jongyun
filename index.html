@@ -7,131 +7,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e0f14; --surface: #16181f; --surface2: #1e2029;
-    --border: #2a2d3a; --accent: #6c8bff; --accent2: #a78bfa;
-    --green: #4ade80; --red: #f87171; --yellow: #fbbf24;
-    --text: #e8eaf0; --text-muted: #6b7280; --text-dim: #9ca3af;
+    --bg:#0e0f14; --surface:#16181f; --surface2:#1e2029;
+    --border:#2a2d3a; --accent:#6c8bff; --accent2:#a78bfa;
+    --green:#4ade80; --red:#f87171; --yellow:#fbbf24;
+    --text:#e8eaf0; --text-muted:#6b7280; --text-dim:#9ca3af;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; padding: 24px 16px 60px; }
-  body::before {
-    content: ''; position: fixed; top: -200px; right: -200px; width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(108,139,255,0.07) 0%, transparent 70%);
-    pointer-events: none; z-index: 0;
-  }
-  .container { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; min-height:100vh; padding:24px 16px 60px; }
+  body::before { content:''; position:fixed; top:-200px; right:-200px; width:600px; height:600px; background:radial-gradient(circle,rgba(108,139,255,0.07) 0%,transparent 70%); pointer-events:none; z-index:0; }
+  .container { max-width:800px; margin:0 auto; position:relative; z-index:1; }
 
-  .header { text-align: center; margin-bottom: 36px; padding-top: 20px; }
-  .header-tag {
-    display: inline-block; font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent); background: rgba(108,139,255,0.1); border: 1px solid rgba(108,139,255,0.25);
-    padding: 5px 14px; border-radius: 20px; margin-bottom: 16px;
-  }
-  .header h1 { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 6px; }
-  .header h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .header p { font-size: 13px; color: var(--text-muted); }
+  /* 헤더 */
+  .header { text-align:center; margin-bottom:36px; padding-top:20px; }
+  .header-tag { display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); background:rgba(108,139,255,0.1); border:1px solid rgba(108,139,255,0.25); padding:5px 14px; border-radius:20px; margin-bottom:16px; }
+  .header h1 { font-size:28px; font-weight:900; letter-spacing:-0.5px; margin-bottom:6px; }
+  .header h1 span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .header p { font-size:13px; color:var(--text-muted); }
 
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
-  .card-title { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
-  .card-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  /* 카드 */
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; }
+  .card-title { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+  .card-title::after { content:''; flex:1; height:1px; background:var(--border); }
 
-  .setting-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-  .setting-row:last-of-type { margin-bottom: 10px; }
-  .setting-label { font-size: 13px; color: var(--text-dim); white-space: nowrap; min-width: 72px; }
-  .input-wrap { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; flex: 1; min-width: 150px; transition: border-color 0.2s; }
-  .input-wrap:focus-within { border-color: var(--accent); }
-  .input-wrap input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 15px; font-weight: 700; width: 100%; }
-  .input-wrap input.large { font-size: 18px; }
-  .input-wrap span { color: var(--text-muted); font-size: 13px; white-space: nowrap; }
-  .btn-save { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: opacity 0.2s, transform 0.1s; }
-  .btn-save:hover { opacity: 0.85; }
-  .btn-save:active { transform: scale(0.97); }
-  .btn-settings { width: 100%; padding: 11px; border-radius: 10px; border: 1px dashed var(--border); background: transparent; color: var(--text-dim); font-family: inherit; font-size: 13px; cursor: pointer; transition: all 0.2s; }
-  .btn-settings:hover { border-color: var(--accent); color: var(--accent); background: rgba(108,139,255,0.05); }
+  /* 설정 행 */
+  .setting-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+  .setting-label { font-size:13px; color:var(--text-dim); white-space:nowrap; min-width:72px; }
+  .input-wrap { display:flex; align-items:center; gap:8px; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 16px; flex:1; min-width:150px; transition:border-color 0.2s; }
+  .input-wrap:focus-within { border-color:var(--accent); }
+  .input-wrap input { background:none; border:none; outline:none; color:var(--text); font-family:inherit; font-size:15px; font-weight:700; width:100%; }
+  .input-wrap input.large { font-size:18px; }
+  .input-wrap span { color:var(--text-muted); font-size:13px; white-space:nowrap; }
+  .btn-save { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; border-radius:10px; padding:10px 20px; font-family:inherit; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; transition:opacity 0.2s,transform 0.1s; }
+  .btn-save:hover { opacity:0.85; }
+  .btn-save:active { transform:scale(0.97); }
+  .btn-settings { width:100%; padding:11px; border-radius:10px; border:1px dashed var(--border); background:transparent; color:var(--text-dim); font-family:inherit; font-size:13px; cursor:pointer; transition:all 0.2s; margin-top:4px; }
+  .btn-settings:hover { border-color:var(--accent); color:var(--accent); background:rgba(108,139,255,0.05); }
 
-  .items-grid { display: grid; gap: 8px; }
-  .item-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 12px 14px; background: var(--surface2); border-radius: 10px; border: 1px solid transparent; transition: border-color 0.2s; }
-  .item-row:hover { border-color: var(--border); }
-  .item-name { font-size: 13px; color: var(--text-dim); }
-  .item-rate { font-size: 11px; color: var(--text-muted); background: rgba(255,255,255,0.04); padding: 2px 8px; border-radius: 6px; }
-  .item-amount { font-size: 15px; font-weight: 700; color: var(--text); min-width: 90px; text-align: right; }
-  .total-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 14px; background: rgba(108,139,255,0.08); border: 1px solid rgba(108,139,255,0.2); border-radius: 10px; margin-top: 4px; }
-  .total-label { font-size: 13px; font-weight: 700; color: var(--accent); }
-  .total-amount { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  /* 항목 리스트 */
+  .items-grid { display:grid; gap:8px; }
+  .item-row { display:grid; grid-template-columns:1fr auto auto; align-items:start; gap:12px; padding:12px 14px; background:var(--surface2); border-radius:10px; border:1px solid transparent; transition:border-color 0.2s; }
+  .item-row:hover { border-color:var(--border); }
+  .item-name { font-size:13px; color:var(--text-dim); }
+  .item-account { font-size:11px; color:var(--text-muted); margin-top:3px; cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:color 0.2s; }
+  .item-account:hover { color:var(--accent); }
+  .item-account .copy-icon { font-size:10px; opacity:0.6; }
+  .item-rate { font-size:11px; color:var(--text-muted); background:rgba(255,255,255,0.04); padding:2px 8px; border-radius:6px; margin-top:2px; white-space:nowrap; }
+  .item-amount { font-size:15px; font-weight:700; color:var(--text); min-width:90px; text-align:right; margin-top:2px; }
+  .total-row { display:flex; justify-content:space-between; align-items:center; padding:16px 14px; background:rgba(108,139,255,0.08); border:1px solid rgba(108,139,255,0.2); border-radius:10px; margin-top:4px; }
+  .total-label { font-size:13px; font-weight:700; color:var(--accent); }
+  .total-amount { font-size:20px; font-weight:900; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-  .year-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 24px; }
-  .year-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 8px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-  .year-btn:hover { background: var(--border); }
-  .year-display { font-size: 20px; font-weight: 700; min-width: 80px; text-align: center; }
+  /* 연도 */
+  .year-nav { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:24px; }
+  .year-btn { background:var(--surface2); border:1px solid var(--border); color:var(--text); width:36px; height:36px; border-radius:8px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+  .year-btn:hover { background:var(--border); }
+  .year-display { font-size:20px; font-weight:700; min-width:80px; text-align:center; }
 
-  .months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  @media (max-width: 500px) { .months-grid { grid-template-columns: repeat(2, 1fr); } }
-  .month-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
-  .month-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .month-card.paid { border-color: rgba(74,222,128,0.35); background: rgba(74,222,128,0.05); }
-  .month-card.partial { border-color: rgba(251,191,36,0.35); background: rgba(251,191,36,0.04); }
-  .month-card.active-month::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-  .month-num { font-size: 22px; font-weight: 900; margin-bottom: 4px; letter-spacing: -1px; }
-  .month-name { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
-  .month-status { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; }
-  .status-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .status-dot.paid { background: var(--green); } .status-dot.partial { background: var(--yellow); } .status-dot.unpaid { background: var(--text-muted); }
-  .status-text.paid { color: var(--green); } .status-text.partial { color: var(--yellow); } .status-text.unpaid { color: var(--text-muted); }
-  .month-progress { margin-top: 8px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .month-progress-bar { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
-  .month-progress-bar.paid { background: var(--green); } .month-progress-bar.partial { background: var(--yellow); }
+  /* 월 그리드 */
+  .months-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  @media (max-width:500px) { .months-grid { grid-template-columns:repeat(2,1fr); } }
+  .month-card { background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:16px; cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden; }
+  .month-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+  .month-card.paid { border-color:rgba(74,222,128,0.35); background:rgba(74,222,128,0.05); }
+  .month-card.partial { border-color:rgba(251,191,36,0.35); background:rgba(251,191,36,0.04); }
+  .month-card.active-month::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .month-num { font-size:22px; font-weight:900; margin-bottom:4px; letter-spacing:-1px; }
+  .month-name { font-size:11px; color:var(--text-muted); margin-bottom:12px; }
+  .month-status { display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; }
+  .status-dot { width:6px; height:6px; border-radius:50%; }
+  .status-dot.paid{background:var(--green);} .status-dot.partial{background:var(--yellow);} .status-dot.unpaid{background:var(--text-muted);}
+  .status-text.paid{color:var(--green);} .status-text.partial{color:var(--yellow);} .status-text.unpaid{color:var(--text-muted);}
+  .month-progress { margin-top:8px; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .month-progress-bar { height:100%; border-radius:2px; transition:width 0.4s ease; }
+  .month-progress-bar.paid{background:var(--green);} .month-progress-bar.partial{background:var(--yellow);}
 
-  .summary-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-  .summary-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; }
-  .summary-num { font-size: 22px; font-weight: 900; margin-bottom: 3px; }
-  .summary-num.green { color: var(--green); } .summary-num.yellow { color: var(--yellow); } .summary-num.muted { color: var(--text-muted); }
-  .summary-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; }
+  /* 요약 */
+  .summary-bar { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+  .summary-item { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+  .summary-num { font-size:22px; font-weight:900; margin-bottom:3px; }
+  .summary-num.green{color:var(--green);} .summary-num.yellow{color:var(--yellow);} .summary-num.muted{color:var(--text-muted);}
+  .summary-label { font-size:10px; color:var(--text-muted); letter-spacing:1px; }
 
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; padding: 28px; transform: translateY(20px); transition: transform 0.2s; }
-  .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-  .modal-title { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
-  .modal-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
-  .modal-close { background: var(--surface2); border: 1px solid var(--border); color: var(--text); width: 32px; height: 32px; border-radius: 8px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  /* 모달 공통 */
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); z-index:100; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+  .modal-overlay.open { opacity:1; pointer-events:all; }
+  .modal { background:var(--surface); border:1px solid var(--border); border-radius:20px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; padding:28px; transform:translateY(20px); transition:transform 0.2s; }
+  .modal-overlay.open .modal { transform:translateY(0); }
+  .modal-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; }
+  .modal-title { font-size:20px; font-weight:900; letter-spacing:-0.5px; }
+  .modal-subtitle { font-size:12px; color:var(--text-muted); margin-top:3px; }
+  .modal-close { background:var(--surface2); border:1px solid var(--border); color:var(--text); width:32px; height:32px; border-radius:8px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 
-  .modal-items { display: grid; gap: 8px; margin-bottom: 20px; }
-  .modal-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 10px 12px; background: var(--surface2); border-radius: 10px; border: 1px solid var(--border); transition: border-color 0.2s; cursor: pointer; }
-  .modal-item:hover { border-color: var(--accent); }
-  .modal-item.checked { border-color: rgba(74,222,128,0.4); background: rgba(74,222,128,0.06); }
-  .modal-item-name { font-size: 13px; }
-  .modal-item-amount { font-size: 13px; font-weight: 700; color: var(--text-dim); }
-  .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; transition: all 0.15s; flex-shrink: 0; }
-  .modal-item.checked .check-box { background: var(--green); border-color: var(--green); color: #000; }
-  .modal-total-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px; background: rgba(108,139,255,0.08); border: 1px solid rgba(108,139,255,0.2); border-radius: 10px; margin-bottom: 16px; }
-  .modal-total-label { font-size: 12px; color: var(--text-muted); }
-  .modal-total-nums { text-align: right; }
-  .modal-total-paid { font-size: 18px; font-weight: 900; color: var(--green); }
-  .modal-total-remain { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-  .btn-all { width: 100%; padding: 13px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-bottom: 8px; }
-  .btn-all:hover { background: var(--border); }
-  .btn-all.complete { background: linear-gradient(135deg, var(--accent), var(--accent2)); border-color: transparent; color: #fff; }
-  .payment-code { font-family: monospace; font-size: 12px; font-weight: 700; background: rgba(108,139,255,0.1); border: 1px solid rgba(108,139,255,0.25); border-radius: 5px; padding: 1px 7px; color: var(--accent); }
+  /* 납부 모달 */
+  .modal-items { display:grid; gap:8px; margin-bottom:20px; }
+  .modal-item { display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:10px; padding:10px 12px; background:var(--surface2); border-radius:10px; border:1px solid var(--border); transition:border-color 0.2s; cursor:pointer; }
+  .modal-item:hover { border-color:var(--accent); }
+  .modal-item.checked { border-color:rgba(74,222,128,0.4); background:rgba(74,222,128,0.06); }
+  .modal-item-name { font-size:13px; }
+  .modal-item-amount { font-size:13px; font-weight:700; color:var(--text-dim); white-space:nowrap; }
+  .check-box { width:20px; height:20px; border-radius:6px; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; transition:all 0.15s; flex-shrink:0; }
+  .modal-item.checked .check-box { background:var(--green); border-color:var(--green); color:#000; }
+  /* 계좌 복사 버튼 */
+  .acct-copy { display:inline-flex; align-items:center; gap:4px; font-size:11px; color:var(--text-muted); background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:5px; padding:2px 8px; cursor:pointer; margin-top:4px; transition:all 0.2s; user-select:none; }
+  .acct-copy:hover { border-color:var(--accent); color:var(--accent); }
+  .acct-copy.copied { border-color:var(--green); color:var(--green); background:rgba(74,222,128,0.08); }
+  .payment-code { font-family:monospace; font-size:12px; font-weight:700; background:rgba(108,139,255,0.1); border:1px solid rgba(108,139,255,0.25); border-radius:5px; padding:1px 7px; color:var(--accent); }
+  .modal-total-bar { display:flex; justify-content:space-between; align-items:center; padding:14px; background:rgba(108,139,255,0.08); border:1px solid rgba(108,139,255,0.2); border-radius:10px; margin-bottom:16px; }
+  .modal-total-label { font-size:12px; color:var(--text-muted); }
+  .modal-total-nums { text-align:right; }
+  .modal-total-paid { font-size:18px; font-weight:900; color:var(--green); }
+  .modal-total-remain { font-size:11px; color:var(--text-muted); margin-top:1px; }
+  .btn-all { width:100%; padding:13px; border-radius:10px; border:1px solid var(--border); background:var(--surface2); color:var(--text); font-family:inherit; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; margin-bottom:8px; }
+  .btn-all:hover { background:var(--border); }
+  .btn-all.complete { background:linear-gradient(135deg,var(--accent),var(--accent2)); border-color:transparent; color:#fff; }
 
-  /* 설정 모달 전용 */
-  .settings-section { margin-bottom: 22px; }
-  .settings-section-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
-  .settings-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 12px 14px; background: var(--surface2); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 8px; }
-  .settings-item-left { display: flex; flex-direction: column; gap: 3px; }
-  .settings-item-name { font-size: 13px; color: var(--text); }
-  .settings-item-default { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .settings-input-wrap { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; transition: border-color 0.2s; }
-  .settings-input-wrap:focus-within { border-color: var(--accent); }
-  .settings-input-wrap input { background: none; border: none; outline: none; color: var(--text); font-family: inherit; font-size: 14px; font-weight: 700; width: 80px; text-align: right; }
-  .settings-input-wrap span { font-size: 12px; color: var(--text-muted); }
-  .btn-reset { background: none; border: 1px solid var(--border); color: var(--text-muted); font-size: 10px; cursor: pointer; padding: 2px 8px; border-radius: 4px; font-family: inherit; transition: all 0.2s; white-space: nowrap; }
-  .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-settings-save { width: 100%; padding: 13px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; margin-top: 4px; }
-  .btn-settings-save:hover { opacity: 0.85; }
+  /* 설정 모달 */
+  .settings-section { margin-bottom:22px; }
+  .settings-section-title { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px; }
+  .settings-item { display:grid; grid-template-columns:1fr auto; align-items:center; gap:12px; padding:12px 14px; background:var(--surface2); border-radius:10px; border:1px solid var(--border); margin-bottom:8px; }
+  .settings-item-left { display:flex; flex-direction:column; gap:3px; }
+  .settings-item-name { font-size:13px; color:var(--text); }
+  .settings-item-default { font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .settings-input-wrap { display:flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:7px 12px; transition:border-color 0.2s; }
+  .settings-input-wrap:focus-within { border-color:var(--accent); }
+  .settings-input-wrap input { background:none; border:none; outline:none; color:var(--text); font-family:inherit; font-size:14px; font-weight:700; width:80px; text-align:right; }
+  .settings-input-wrap span { font-size:12px; color:var(--text-muted); }
+  .btn-reset { background:none; border:1px solid var(--border); color:var(--text-muted); font-size:10px; cursor:pointer; padding:2px 8px; border-radius:4px; font-family:inherit; transition:all 0.2s; white-space:nowrap; }
+  .btn-reset:hover { border-color:var(--accent); color:var(--accent); }
+  .btn-settings-save { width:100%; padding:13px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; color:#fff; font-family:inherit; font-size:14px; font-weight:700; cursor:pointer; transition:opacity 0.2s; margin-top:4px; }
+  .btn-settings-save:hover { opacity:0.85; }
 
-  .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; font-size: 13px; font-weight: 700; color: var(--text); z-index: 200; opacity: 0; transition: all 0.3s; white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  /* 토스트 */
+  .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:13px; font-weight:700; color:var(--text); z-index:200; opacity:0; transition:all 0.3s; white-space:nowrap; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* 납부 상태 배너 */
+  .status-banner { border-radius:12px; padding:14px 16px; margin-bottom:20px; transition:all 0.3s; }
+  .status-banner.safe  { background:rgba(74,222,128,0.08); border:1px solid rgba(74,222,128,0.3); }
+  .status-banner.warn  { background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.3); }
+  .status-banner.danger{ background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); }
+  .status-banner-top { display:flex; align-items:center; gap:10px; }
+  .status-banner-icon { font-size:18px; }
+  .status-banner-title { font-size:13px; font-weight:900; }
+  .status-banner.safe  .status-banner-title { color:var(--green); }
+  .status-banner.warn  .status-banner-title { color:var(--yellow); }
+  .status-banner.danger .status-banner-title { color:var(--red); }
+  .status-banner-body { font-size:11px; color:var(--text-muted); margin-top:5px; line-height:1.6; }
+  .status-banner-months { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .status-month-tag { font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; cursor:pointer; transition:all 0.2s; }
+  .warn  .status-month-tag { background:rgba(251,191,36,0.15); border:1px solid rgba(251,191,36,0.3); color:var(--yellow); }
+  .warn  .status-month-tag:hover { background:rgba(251,191,36,0.28); }
+  .danger .status-month-tag { background:rgba(248,113,113,0.15); border:1px solid rgba(248,113,113,0.3); color:var(--red); }
+  .danger .status-month-tag:hover { background:rgba(248,113,113,0.28); }
 </style>
 </head>
 <body>
@@ -143,11 +170,12 @@
     <p>공동체비를 놓치지 않게 — 항목별로 체크하고 기록해요</p>
   </div>
 
+  <!-- 기본 설정 -->
   <div class="card">
     <div class="card-title">기본 설정</div>
     <div class="setting-row">
       <span class="setting-label">이름</span>
-      <div class="input-wrap" style="flex:0.6; min-width:120px">
+      <div class="input-wrap" style="flex:0.6;min-width:120px">
         <input type="text" id="nameInput" placeholder="이름 입력" maxlength="10" />
       </div>
       <button class="btn-save" onclick="saveName()">저장</button>
@@ -163,6 +191,7 @@
     <button class="btn-settings" onclick="openSettings()">⚙️ 납부 항목 금액 설정</button>
   </div>
 
+  <!-- 이번 달 항목 -->
   <div class="card">
     <div class="card-title">이번 달 납부 항목</div>
     <div class="items-grid" id="itemsGrid"></div>
@@ -172,8 +201,13 @@
     </div>
   </div>
 
+  <!-- 월별 현황 -->
   <div class="card">
     <div class="card-title">월별 납부 현황</div>
+
+    <!-- 납부 상태 배너 -->
+    <div id="statusBanner"></div>
+
     <div class="year-nav">
       <button class="year-btn" onclick="changeYear(-1)">‹</button>
       <span class="year-display" id="yearDisplay"></span>
@@ -209,7 +243,7 @@
 <div class="modal-overlay" id="settingsOverlay" onclick="closeSettingsOutside(event)">
   <div class="modal" style="max-width:520px">
     <div class="modal-header">
-      <div><div class="modal-title">납부 항목 설정</div><div class="modal-subtitle">수정한 항목만 개별 저장돼요 · 초기화로 기본값 복원 가능</div></div>
+      <div><div class="modal-title">납부 항목 설정</div><div class="modal-subtitle">수정한 항목만 저장 · 초기화로 기본값 복원</div></div>
       <button class="modal-close" onclick="closeSettings()">✕</button>
     </div>
     <div id="settingsContent"></div>
@@ -219,19 +253,20 @@
 <div class="toast" id="toast"></div>
 
 <script>
+// ── 기본 항목 정의 ────────────────────────────────────────────
 const ITEMS_DEF = [
   { key:'op',      name:'운영기금',         rate:0.10, defaultFixed:null,  account:'하나 439-910018-30905', code:'11', editable:'rate'  },
   { key:'coop',    name:'협력기금',         rate:0.04, defaultFixed:null,  account:'하나 439-910018-38005', code:'21', editable:'rate'  },
   { key:'welfare', name:'복지기금',         rate:0.10, defaultFixed:null,  account:'하나 439-910018-73705', code:'31', editable:'rate'  },
   { key:'travel',  name:'여행자금',         rate:null, defaultFixed:30000, account:'하나 439-910018-76605', code:'40', editable:'fixed' },
   { key:'bank',    name:'은행자금',         rate:0.02, defaultFixed:null,  account:'하나 439-910018-76605', code:'41', editable:'rate'  },
-  { key:'jeju',    name:'오늘제주 회비',    rate:null, defaultFixed:10000, account:'',                      code:'',   editable:'fixed' },
+  { key:'jeju',    name:'오늘제주 회비',    rate:null, defaultFixed:10000, account:'카카오 3333-33-5168458 (김선애)', code:'',   editable:'fixed' },
   { key:'union',   name:'조합비 (은공1호)', rate:0.03, defaultFixed:null,  account:'하나 439-910018-42905', code:'',   editable:'rate'  },
   { key:'kimbap',  name:'김밥',            rate:null, defaultFixed:20000, account:'농협 302-0622-7365-21', code:'',   editable:'fixed' },
-  { key:'tribe',   name:'3부족 생활비',    rate:null, defaultFixed:null,  account:'',                      code:'',   editable:'free'  },
 ];
 const MONTHS_KR = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
 
+// ── 상태 ─────────────────────────────────────────────────────
 function loadData() { return JSON.parse(localStorage.getItem('commData') || '{}'); }
 function saveData(d) { localStorage.setItem('commData', JSON.stringify(d)); }
 
@@ -241,15 +276,13 @@ if (!state.payments)    state.payments = {};
 if (!state.userName)    state.userName = '';
 if (!state.customItems) state.customItems = {};
 if (!state.extraItems)  state.extraItems = [];
-// extraItems 형식: [{ key, name, fixed }]
 
-let currentYear = new Date().getFullYear();
+let currentYear = 2026;
 let selectedMonth = null;
 
 // ── 계산 ─────────────────────────────────────────────────────
 function getItemAmount(item, income) {
   const c = state.customItems[item.key] || {};
-  if (item.editable === 'free')  return c.fixed !== undefined ? c.fixed : 0;
   if (item.editable === 'fixed') return c.fixed !== undefined ? c.fixed : item.defaultFixed;
   if (item.editable === 'rate')  return Math.round(income * (c.rate !== undefined ? c.rate : item.rate));
   return 0;
@@ -258,14 +291,13 @@ function getItemRateLabel(item) {
   const c = state.customItems[item.key] || {};
   if (item.editable === 'rate') {
     const r = c.rate !== undefined ? c.rate : item.rate;
-    const changed = c.rate !== undefined && c.rate !== item.rate;
-    return (r * 100) + '%' + (changed ? ' *' : '');
+    return (r * 100) + '%' + (c.rate !== undefined && c.rate !== item.rate ? ' *' : '');
   }
   return '고정';
 }
 function calcItems(income) {
   const base = ITEMS_DEF.map(item => ({ ...item, amount: getItemAmount(item, income), rateLabel: getItemRateLabel(item), isExtra: false }));
-  const extra = state.extraItems.map(item => ({ ...item, rate: null, defaultFixed: item.fixed, editable: 'free', account: '', code: '', amount: item.fixed || 0, rateLabel: '고정', isExtra: true }));
+  const extra = state.extraItems.map(item => ({ ...item, rate: null, defaultFixed: item.fixed, editable: 'free', account: item.account || '', code: '', amount: item.fixed || 0, rateLabel: '고정', isExtra: true }));
   return [...base, ...extra];
 }
 function getIncomeForMonth(year, mi) {
@@ -290,11 +322,8 @@ function formatCommaInput(el) {
   const raw = el.value.replace(/[^0-9]/g, '');
   el.value = raw ? parseInt(raw).toLocaleString('ko-KR') : '';
 }
-function getRawNumber(elId) {
-  return parseInt(document.getElementById(elId).value.replace(/[^0-9]/g, '')) || 0;
-}
 function saveIncome() {
-  const v = getRawNumber('incomeInput');
+  const v = parseInt(document.getElementById('incomeInput').value.replace(/[^0-9]/g,'')) || 0;
   if (v < 1000) { showToast('⚠️ 올바른 금액을 입력해주세요'); return; }
   state.income = v;
   const now = new Date(), key = `${now.getFullYear()}-${now.getMonth()}`;
@@ -302,34 +331,97 @@ function saveIncome() {
   state.payments[key]._income = v;
   saveData(state); renderItems(); renderMonths(); showToast('✅ 소득이 저장됐어요');
 }
+
+// ── 항목 리스트 렌더 ─────────────────────────────────────────
 function renderItems() {
   document.getElementById('incomeInput').value = state.income.toLocaleString('ko-KR');
   const items = calcItems(state.income);
   document.getElementById('itemsGrid').innerHTML = items.map(item => `
     <div class="item-row">
-      <span class="item-name">${item.name}</span>
+      <div>
+        <div class="item-name">${item.name}</div>
+        ${item.account ? `<span class="item-account" onclick="copyAccount('${item.account}', this)">
+          <span class="copy-icon">📋</span>${item.account}
+        </span>` : ''}
+      </div>
       <span class="item-rate">${item.rateLabel}</span>
       <span class="item-amount">${fmt(item.amount)}</span>
     </div>`).join('');
   document.getElementById('totalAmount').textContent = fmt(items.reduce((s,i)=>s+i.amount,0));
 }
 
-// ── 월별 ─────────────────────────────────────────────────────
+// ── 계좌 복사 ────────────────────────────────────────────────
+function copyAccount(account, el) {
+  navigator.clipboard.writeText(account).then(() => {
+    el.classList.add('copied');
+    el.innerHTML = `<span class="copy-icon">✓</span>복사됨`;
+    setTimeout(() => {
+      el.classList.remove('copied');
+      el.innerHTML = `<span class="copy-icon">📋</span>${account}`;
+    }, 2000);
+  }).catch(() => {
+    // fallback
+    const t = document.createElement('textarea');
+    t.value = account; document.body.appendChild(t); t.select();
+    document.execCommand('copy'); document.body.removeChild(t);
+    el.classList.add('copied');
+    el.innerHTML = `<span class="copy-icon">✓</span>복사됨`;
+    setTimeout(() => {
+      el.classList.remove('copied');
+      el.innerHTML = `<span class="copy-icon">📋</span>${account}`;
+    }, 2000);
+  });
+  showToast('📋 계좌번호가 복사됐어요');
+}
+
+// ── 연도 / 월별 ──────────────────────────────────────────────
 function changeYear(d) { currentYear += d; document.getElementById('yearDisplay').textContent = currentYear; renderMonths(); }
 function renderMonths() {
   const now = new Date(), grid = document.getElementById('monthsGrid');
-  const summary = {paid:0, partial:0, unpaid:0};
-  grid.innerHTML = Array.from({length:12}, (_,i) => {
-    const key = `${currentYear}-${i}`, payment = state.payments[key] || {};
-    const items = calcItems(getIncomeForMonth(currentYear, i));
-    const paidCount = items.filter(it => payment[it.key]).length;
-    let status, sc;
-    if (paidCount === items.length) { status='완납'; sc='paid'; summary.paid++; }
-    else if (paidCount > 0)          { status=`${paidCount}/${items.length} 납부`; sc='partial'; summary.partial++; }
-    else                             { status='미납'; sc='unpaid'; summary.unpaid++; }
-    const isNow = now.getFullYear()===currentYear && now.getMonth()===i;
-    const prog = Math.round(paidCount/items.length*100);
+  const summary = {paid:0,partial:0,unpaid:0};
+
+  // 2026년 기준 미납 누적 계산 (경고 아이콘용)
+  const curYear = now.getFullYear(), curMonth = now.getMonth();
+  let unpaidCount = 0;
+  const unpaidSet = new Set();
+  for (let i = 0; i < 12; i++) {
+    let y = curYear, m = curMonth - i;
+    while (m < 0) { m += 12; y--; }
+    if (y < 2026) break;
+    const k = `${y}-${m}`;
+    const p = state.payments[k] || {};
+    const it = calcItems(getIncomeForMonth(y, m));
+    if (it.filter(x => p[x.key]).length < it.length) {
+      unpaidCount++;
+      unpaidSet.add(k);
+    }
+  }
+
+  grid.innerHTML = Array.from({length:12},(_,i) => {
+    const key=`${currentYear}-${i}`, payment=state.payments[key]||{};
+    const items=calcItems(getIncomeForMonth(currentYear,i));
+    const paidCount=items.filter(it=>payment[it.key]).length;
+    let status,sc;
+    if(paidCount===items.length){status='완납';sc='paid';summary.paid++;}
+    else if(paidCount>0){status=`${paidCount}/${items.length} 납부`;sc='partial';summary.partial++;}
+    else{status='미납';sc='unpaid';summary.unpaid++;}
+    const isNow=now.getFullYear()===currentYear&&now.getMonth()===i;
+    const prog=Math.round(paidCount/items.length*100);
+
+    // 아이콘 결정
+    let icon = '';
+    if (sc === 'paid') {
+      icon = '<span style="position:absolute;top:10px;right:10px;font-size:14px">✅</span>';
+    } else if (unpaidSet.has(key)) {
+      if (unpaidCount >= 3) icon = '<span style="position:absolute;top:10px;right:10px;font-size:14px">🚨</span>';
+      else if (unpaidCount === 2) icon = '<span style="position:absolute;top:10px;right:10px;font-size:14px">⚠️</span>';
+      else icon = '<span style="position:absolute;top:10px;right:10px;font-size:14px">🔔</span>';
+    } else if (sc === 'partial') {
+      icon = '<span style="position:absolute;top:10px;right:10px;font-size:14px">🔄</span>';
+    }
+
     return `<div class="month-card ${sc==='paid'?'paid':''} ${sc==='partial'?'partial':''} ${isNow?'active-month':''}" onclick="openModal(${currentYear},${i})">
+      ${icon}
       <div class="month-num">${i+1}</div>
       <div class="month-name">${MONTHS_KR[i]}</div>
       <div class="month-status"><div class="status-dot ${sc}"></div><span class="status-text ${sc}">${status}</span></div>
@@ -344,59 +436,89 @@ function renderMonths() {
 
 // ── 납부 모달 ────────────────────────────────────────────────
 function openModal(year, mi) {
-  selectedMonth = {year, monthIdx: mi};
-  const key = `${year}-${mi}`, payment = state.payments[key] || {};
-  const income = getIncomeForMonth(year, mi), items = calcItems(income);
-  const mm = String(mi+1).padStart(2,'0'), name = state.userName || '이름';
+  selectedMonth = {year, monthIdx:mi};
+  const key=`${year}-${mi}`, payment=state.payments[key]||{};
+  const income=getIncomeForMonth(year,mi), items=calcItems(income);
+  const mm=String(mi+1).padStart(2,'0'), name=state.userName||'이름';
+
   document.getElementById('modalTitle').textContent = `${year}년 ${mi+1}월 납부`;
   document.getElementById('modalSubtitle').textContent = `소득 기준 ${income.toLocaleString('ko-KR')}원 · 항목 클릭해서 체크하세요`;
+
   document.getElementById('modalItems').innerHTML = items.map(item => {
     const paid = !!payment[item.key];
     const codeStr = item.code ? `<span class="payment-code">${item.code}${name}${mm}</span>` : '';
-    const acct = item.account ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px">${item.account} ${codeStr}</div>` : '';
+    const acctRow = item.account
+      ? `<div style="margin-top:5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+           <span class="acct-copy" onclick="copyAccountModal('${item.account}',this)"
+                 style="pointer-events:all" id="acct_${item.key}">
+             📋 ${item.account}
+           </span>
+           ${codeStr}
+         </div>`
+      : (codeStr ? `<div style="margin-top:4px">${codeStr}</div>` : '');
     return `<div class="modal-item ${paid?'checked':''}" onclick="toggleItem('${item.key}')">
-      <div><div class="modal-item-name">${item.name}</div>${acct}</div>
+      <div>
+        <div class="modal-item-name">${item.name}</div>
+        ${acctRow}
+      </div>
       <span class="modal-item-amount">${fmt(item.amount)}</span>
       <div class="check-box">${paid?'✓':''}</div>
     </div>`;
   }).join('');
-  const allPaid = items.every(i => payment[i.key]);
+
+  const allPaid = items.every(i=>payment[i.key]);
   document.getElementById('btnAllPaid').textContent = allPaid ? '✓ 전체 납부 완료됨' : '전체 완납으로 표시';
-  document.getElementById('btnAllPaid').className = 'btn-all ' + (allPaid ? 'complete' : '');
+  document.getElementById('btnAllPaid').className = 'btn-all '+(allPaid?'complete':'');
   updateModalTotal(items, payment);
   document.getElementById('modalOverlay').classList.add('open');
 }
+
+function copyAccountModal(account, el) {
+  event.stopPropagation(); // 체크 토글 방지
+  navigator.clipboard.writeText(account).then(() => {
+    el.classList.add('copied');
+    el.textContent = '✓ 복사됨';
+    setTimeout(() => { el.classList.remove('copied'); el.innerHTML = `📋 ${account}`; }, 2000);
+  }).catch(() => {
+    const t=document.createElement('textarea'); t.value=account; document.body.appendChild(t); t.select();
+    document.execCommand('copy'); document.body.removeChild(t);
+    el.classList.add('copied'); el.textContent='✓ 복사됨';
+    setTimeout(()=>{ el.classList.remove('copied'); el.innerHTML=`📋 ${account}`; },2000);
+  });
+  showToast('📋 계좌번호가 복사됐어요');
+}
+
 function updateModalTotal(items, payment) {
-  if (!items) {
-    const key = `${selectedMonth.year}-${selectedMonth.monthIdx}`;
-    const income = getIncomeForMonth(selectedMonth.year, selectedMonth.monthIdx);
-    items = calcItems(income); payment = state.payments[key] || {};
+  if(!items){
+    const key=`${selectedMonth.year}-${selectedMonth.monthIdx}`;
+    items=calcItems(getIncomeForMonth(selectedMonth.year,selectedMonth.monthIdx));
+    payment=state.payments[key]||{};
   }
-  const paid = items.filter(i=>payment[i.key]).reduce((s,i)=>s+i.amount,0);
-  const total = items.reduce((s,i)=>s+i.amount,0);
-  document.getElementById('modalTotalPaid').textContent = fmt(paid);
-  document.getElementById('modalTotalRemain').textContent = paid>=total ? '🎉 완납!' : `잔여 ${fmt(total-paid)}`;
+  const paid=items.filter(i=>payment[i.key]).reduce((s,i)=>s+i.amount,0);
+  const total=items.reduce((s,i)=>s+i.amount,0);
+  document.getElementById('modalTotalPaid').textContent=fmt(paid);
+  document.getElementById('modalTotalRemain').textContent=paid>=total?'🎉 완납!':`잔여 ${fmt(total-paid)}`;
 }
 function toggleItem(itemKey) {
-  const key = `${selectedMonth.year}-${selectedMonth.monthIdx}`;
-  if (!state.payments[key]) state.payments[key] = {};
-  if (!state.payments[key]._income) state.payments[key]._income = state.income;
-  state.payments[key][itemKey] = !state.payments[key][itemKey];
-  saveData(state); openModal(selectedMonth.year, selectedMonth.monthIdx); renderMonths();
+  const key=`${selectedMonth.year}-${selectedMonth.monthIdx}`;
+  if(!state.payments[key]) state.payments[key]={};
+  if(!state.payments[key]._income) state.payments[key]._income=state.income;
+  state.payments[key][itemKey]=!state.payments[key][itemKey];
+  saveData(state); openModal(selectedMonth.year,selectedMonth.monthIdx); renderMonths(); checkWarning();
 }
 function toggleAllPaid() {
-  const key = `${selectedMonth.year}-${selectedMonth.monthIdx}`;
-  const income = getIncomeForMonth(selectedMonth.year, selectedMonth.monthIdx);
-  const items = calcItems(income);
-  const allPaid = items.every(i => (state.payments[key]||{})[i.key]);
-  if (!state.payments[key]) state.payments[key] = {};
-  if (!state.payments[key]._income) state.payments[key]._income = state.income;
-  items.forEach(i => { state.payments[key][i.key] = !allPaid; });
-  saveData(state); openModal(selectedMonth.year, selectedMonth.monthIdx); renderMonths();
-  showToast(allPaid ? '↩️ 전체 해제됐어요' : '🎉 전체 완납 처리됐어요!');
+  const key=`${selectedMonth.year}-${selectedMonth.monthIdx}`;
+  const income=getIncomeForMonth(selectedMonth.year,selectedMonth.monthIdx);
+  const items=calcItems(income);
+  const allPaid=items.every(i=>(state.payments[key]||{})[i.key]);
+  if(!state.payments[key]) state.payments[key]={};
+  if(!state.payments[key]._income) state.payments[key]._income=state.income;
+  items.forEach(i=>{state.payments[key][i.key]=!allPaid;});
+  saveData(state); openModal(selectedMonth.year,selectedMonth.monthIdx); renderMonths(); checkWarning();
+  showToast(allPaid?'↩️ 전체 해제됐어요':'🎉 전체 완납 처리됐어요!');
 }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
-function closeModalOutside(e) { if (e.target===document.getElementById('modalOverlay')) closeModal(); }
+function closeModalOutside(e) { if(e.target===document.getElementById('modalOverlay')) closeModal(); }
 
 // ── 설정 모달 ────────────────────────────────────────────────
 function openSettings() {
@@ -406,14 +528,13 @@ function openSettings() {
     const c = state.customItems[item.key] || {};
     if (item.editable === 'rate') {
       const cur = c.rate !== undefined ? c.rate*100 : item.rate*100;
-      const def = item.rate*100;
       const isModified = c.rate !== undefined;
       return `<div class="settings-item">
         <div class="settings-item-left">
-          <span class="settings-item-name">${item.name} ${isModified ? '<span style="color:var(--accent);font-size:10px">수정됨</span>' : ''}</span>
+          <span class="settings-item-name">${item.name}${isModified?' <span style="color:var(--accent);font-size:10px">수정됨</span>':''}</span>
           <div class="settings-item-default">
-            기본 ${def}% · 현재 ${Math.round(income*cur/100).toLocaleString()}원
-            ${isModified ? `<button class="btn-reset" onclick="resetItem('${item.key}')">초기화</button>` : ''}
+            기본 ${item.rate*100}% · 현재 ${Math.round(income*cur/100).toLocaleString()}원
+            ${isModified?`<button class="btn-reset" onclick="resetItem('${item.key}')">초기화</button>`:''}
           </div>
         </div>
         <div class="settings-input-wrap">
@@ -422,38 +543,31 @@ function openSettings() {
         </div>
       </div>`;
     } else {
-      // fixed or free
       const defVal = item.defaultFixed;
       const curVal = c.fixed !== undefined ? c.fixed : (defVal || 0);
       const isModified = c.fixed !== undefined;
-      const placeholder = defVal ? defVal.toLocaleString('ko-KR') : '0';
       return `<div class="settings-item">
         <div class="settings-item-left">
-          <span class="settings-item-name">${item.name} ${isModified ? '<span style="color:var(--accent);font-size:10px">수정됨</span>' : ''}</span>
+          <span class="settings-item-name">${item.name}${isModified?' <span style="color:var(--accent);font-size:10px">수정됨</span>':''}</span>
           <div class="settings-item-default">
-            ${defVal !== null ? `기본 ${defVal.toLocaleString()}원` : '직접 입력 (기본값 없음)'}
-            ${isModified && defVal !== null ? `<button class="btn-reset" onclick="resetItem('${item.key}')">초기화</button>` : ''}
+            기본 ${defVal?defVal.toLocaleString()+'원':'—'}
+            ${isModified&&defVal!==null?`<button class="btn-reset" onclick="resetItem('${item.key}')">초기화</button>`:''}
           </div>
         </div>
         <div class="settings-input-wrap">
-          <input type="text" id="s_${item.key}"
-            value="${curVal > 0 ? curVal.toLocaleString('ko-KR') : ''}"
-            placeholder="${placeholder}"
-            inputmode="numeric"
-            oninput="formatCommaInput(this)" />
+          <input type="text" id="s_${item.key}" value="${curVal>0?curVal.toLocaleString('ko-KR'):''}" placeholder="${defVal?defVal.toLocaleString('ko-KR'):'0'}" inputmode="numeric" oninput="formatCommaInput(this)" />
           <span>원</span>
         </div>
       </div>`;
     }
   }
 
-  const rateItems  = ITEMS_DEF.filter(i => i.editable === 'rate');
-  const fixedItems = ITEMS_DEF.filter(i => i.editable === 'fixed');
-  const freeItems  = ITEMS_DEF.filter(i => i.editable === 'free');
+  const rateItems  = ITEMS_DEF.filter(i=>i.editable==='rate');
+  const fixedItems = ITEMS_DEF.filter(i=>i.editable==='fixed');
 
   document.getElementById('settingsContent').innerHTML = `
     <div class="settings-section">
-      <div class="settings-section-title">📊 퍼센트 항목 (소득 기준 ${income.toLocaleString()}원)</div>
+      <div class="settings-section-title">📊 퍼센트 항목 (기준 ${income.toLocaleString()}원)</div>
       ${rateItems.map(row).join('')}
     </div>
     <div class="settings-section">
@@ -461,34 +575,24 @@ function openSettings() {
       ${fixedItems.map(row).join('')}
     </div>
     <div class="settings-section">
-      <div class="settings-section-title">✏️ 직접 입력 항목</div>
-      ${freeItems.map(row).join('')}
-    </div>
-    <div class="settings-section">
       <div class="settings-section-title">➕ 내가 추가한 항목</div>
-      <div id="extraItemsList">
-        ${state.extraItems.length === 0
-          ? `<div style="font-size:12px;color:var(--text-muted);padding:10px 0">아직 추가된 항목이 없어요</div>`
-          : state.extraItems.map((item, idx) => `
-            <div class="settings-item">
-              <div class="settings-item-left">
-                <span class="settings-item-name">${item.name}</span>
-                <span class="settings-item-default">직접 추가한 항목</span>
+      ${state.extraItems.length === 0
+        ? `<div style="font-size:12px;color:var(--text-muted);padding:8px 0">아직 추가된 항목이 없어요</div>`
+        : state.extraItems.map(item => `
+          <div class="settings-item">
+            <div class="settings-item-left">
+              <span class="settings-item-name">${item.name}</span>
+              <span class="settings-item-default">직접 추가한 항목</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="settings-input-wrap">
+                <input type="text" id="extra_${item.key}" value="${item.fixed?item.fixed.toLocaleString('ko-KR'):''}" placeholder="0" inputmode="numeric" oninput="formatCommaInput(this)" />
+                <span>원</span>
               </div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <div class="settings-input-wrap">
-                  <input type="text" id="extra_${item.key}"
-                    value="${item.fixed ? item.fixed.toLocaleString('ko-KR') : ''}"
-                    placeholder="0" inputmode="numeric"
-                    oninput="formatCommaInput(this)" />
-                  <span>원</span>
-                </div>
-                <button class="btn-reset" style="color:var(--red);border-color:rgba(248,113,113,0.3)" onclick="deleteExtraItem('${item.key}')">삭제</button>
-              </div>
-            </div>`).join('')
-        }
-      </div>
-      <!-- 새 항목 추가 폼 -->
+              <button class="btn-reset" style="color:var(--red);border-color:rgba(248,113,113,0.3)" onclick="deleteExtraItem('${item.key}')">삭제</button>
+            </div>
+          </div>`).join('')
+      }
       <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
         <div class="input-wrap" style="flex:1;min-width:120px;padding:8px 12px">
           <input type="text" id="newItemName" placeholder="항목 이름" maxlength="15" style="font-size:13px" />
@@ -506,67 +610,127 @@ function openSettings() {
 }
 
 function addExtraItem() {
-  const nameEl = document.getElementById('newItemName');
-  const amtEl  = document.getElementById('newItemAmount');
-  const name   = nameEl.value.trim();
-  const fixed  = parseInt(amtEl.value.replace(/[^0-9]/g, '')) || 0;
-  if (!name) { showToast('⚠️ 항목 이름을 입력해주세요'); return; }
-  const key = 'extra_' + Date.now();
-  state.extraItems.push({ key, name, fixed });
-  saveData(state);
-  nameEl.value = ''; amtEl.value = '';
-  openSettings();
-  showToast(`✅ "${name}" 항목이 추가됐어요`);
+  const nameEl=document.getElementById('newItemName'), amtEl=document.getElementById('newItemAmount');
+  const name=nameEl.value.trim(), fixed=parseInt(amtEl.value.replace(/[^0-9]/g,''))||0;
+  if(!name){showToast('⚠️ 항목 이름을 입력해주세요');return;}
+  state.extraItems.push({key:'extra_'+Date.now(), name, fixed});
+  saveData(state); nameEl.value=''; amtEl.value='';
+  openSettings(); showToast(`✅ "${name}" 항목이 추가됐어요`);
 }
-
 function deleteExtraItem(key) {
-  state.extraItems = state.extraItems.filter(i => i.key !== key);
-  // 관련 납부 기록도 정리
-  Object.values(state.payments).forEach(p => { delete p[key]; });
-  saveData(state);
-  openSettings();
-  renderItems(); renderMonths();
-  showToast('🗑️ 항목이 삭제됐어요');
+  state.extraItems=state.extraItems.filter(i=>i.key!==key);
+  Object.values(state.payments).forEach(p=>{delete p[key];});
+  saveData(state); openSettings(); renderItems(); renderMonths(); showToast('🗑️ 항목이 삭제됐어요');
 }
-
 function resetItem(key) {
-  delete state.customItems[key];
-  saveData(state); openSettings(); showToast('↩️ 기본값으로 초기화됐어요');
+  delete state.customItems[key]; saveData(state); openSettings(); showToast('↩️ 기본값으로 초기화됐어요');
 }
-
 function saveSettings() {
   ITEMS_DEF.forEach(item => {
-    const el = document.getElementById(`s_${item.key}`);
-    if (!el) return;
-    if (!state.customItems[item.key]) state.customItems[item.key] = {};
-    if (item.editable === 'rate') {
-      const v = parseFloat(el.value);
-      if (!isNaN(v) && v > 0) state.customItems[item.key].rate = v / 100;
+    const el=document.getElementById(`s_${item.key}`); if(!el) return;
+    if(!state.customItems[item.key]) state.customItems[item.key]={};
+    if(item.editable==='rate'){
+      const v=parseFloat(el.value);
+      if(!isNaN(v)&&v>0) state.customItems[item.key].rate=v/100;
       else delete state.customItems[item.key].rate;
     } else {
-      const v = parseInt(el.value.replace(/[^0-9]/g, ''));
-      if (!isNaN(v)) state.customItems[item.key].fixed = v;
+      const v=parseInt(el.value.replace(/[^0-9]/g,''));
+      if(!isNaN(v)) state.customItems[item.key].fixed=v;
       else delete state.customItems[item.key].fixed;
     }
-    if (!Object.keys(state.customItems[item.key]).length) delete state.customItems[item.key];
+    if(!Object.keys(state.customItems[item.key]).length) delete state.customItems[item.key];
   });
-  // 추가한 항목 금액 저장
   state.extraItems.forEach(item => {
-    const el = document.getElementById(`extra_${item.key}`);
-    if (!el) return;
-    const v = parseInt(el.value.replace(/[^0-9]/g, ''));
-    item.fixed = isNaN(v) ? 0 : v;
+    const el=document.getElementById(`extra_${item.key}`); if(!el) return;
+    const v=parseInt(el.value.replace(/[^0-9]/g,''));
+    item.fixed=isNaN(v)?0:v;
   });
   saveData(state); renderItems(); renderMonths(); closeSettings(); showToast('✅ 항목 설정이 저장됐어요');
 }
 function closeSettings() { document.getElementById('settingsOverlay').classList.remove('open'); }
-function closeSettingsOutside(e) { if (e.target===document.getElementById('settingsOverlay')) closeSettings(); }
+function closeSettingsOutside(e) { if(e.target===document.getElementById('settingsOverlay')) closeSettings(); }
+
+// ── 납부 상태 배너 ───────────────────────────────────────────
+function checkWarning() {
+  const now = new Date();
+  const curYear = now.getFullYear(), curMonth = now.getMonth();
+  const unpaidMonths = [];
+
+  for (let i = 0; i < 12; i++) {
+    let y = curYear, m = curMonth - i;
+    while (m < 0) { m += 12; y--; }
+    if (y < 2026) break;
+    const key = `${y}-${m}`;
+    const payment = state.payments[key] || {};
+    const items = calcItems(getIncomeForMonth(y, m));
+    const paidCount = items.filter(it => payment[it.key]).length;
+    if (paidCount < items.length) unpaidMonths.push({ year: y, month: m });
+  }
+
+  const count = unpaidMonths.length;
+  const el = document.getElementById('statusBanner');
+
+  if (count === 0) {
+    el.innerHTML = `
+      <div class="status-banner safe">
+        <div class="status-banner-top">
+          <span class="status-banner-icon">✅</span>
+          <span class="status-banner-title">납부 안정권이에요!</span>
+        </div>
+        <div class="status-banner-body">미납 없음 · 잘 관리하고 있어요 👍</div>
+      </div>`;
+  } else if (count === 1) {
+    el.innerHTML = `
+      <div class="status-banner safe">
+        <div class="status-banner-top">
+          <span class="status-banner-icon">🟢</span>
+          <span class="status-banner-title">안정권 · 미납 ${count}개월</span>
+        </div>
+        <div class="status-banner-body">아직 괜찮아요. 빠른 납부를 권장해요.</div>
+        <div class="status-banner-months">
+          ${unpaidMonths.map(({year,month})=>`<span class="status-month-tag warn" onclick="openModalAndScroll(${year},${month})">${year}년 ${month+1}월</span>`).join('')}
+        </div>
+      </div>`;
+  } else if (count === 2) {
+    el.innerHTML = `
+      <div class="status-banner warn">
+        <div class="status-banner-top">
+          <span class="status-banner-icon">⚠️</span>
+          <span class="status-banner-title">주의 · 미납 ${count}개월</span>
+        </div>
+        <div class="status-banner-body">한 달 더 밀리면 경고 대상이에요. 지금 납부하세요!</div>
+        <div class="status-banner-months">
+          ${unpaidMonths.map(({year,month})=>`<span class="status-month-tag warn" onclick="openModalAndScroll(${year},${month})">${year}년 ${month+1}월</span>`).join('')}
+        </div>
+      </div>`;
+  } else {
+    el.innerHTML = `
+      <div class="status-banner danger">
+        <div class="status-banner-top">
+          <span class="status-banner-icon">🚨</span>
+          <span class="status-banner-title">경고 · 미납 ${count}개월 — 패널티 대상이에요!</span>
+        </div>
+        <div class="status-banner-body">3개월 이상 미납 시 경고 및 패널티가 발생할 수 있어요. 아래 달을 눌러 바로 납부하세요.</div>
+        <div class="status-banner-months">
+          ${unpaidMonths.map(({year,month})=>`<span class="status-month-tag" onclick="openModalAndScroll(${year},${month})">${year}년 ${month+1}월</span>`).join('')}
+        </div>
+      </div>`;
+  }
+}
+
+function openModalAndScroll(year, month) {
+  // 해당 연도로 이동 후 모달 열기
+  currentYear = year;
+  document.getElementById('yearDisplay').textContent = currentYear;
+  renderMonths();
+  openModal(year, month);
+}
 
 // ── 유틸 ─────────────────────────────────────────────────────
-function fmt(n) { return (n||0).toLocaleString('ko-KR') + '원'; }
+function fmt(n) { return (n||0).toLocaleString('ko-KR')+'원'; }
 function showToast(msg) {
-  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
 }
 
 // ── 초기화 ───────────────────────────────────────────────────
@@ -574,6 +738,7 @@ document.getElementById('yearDisplay').textContent = currentYear;
 renderHeader();
 renderItems();
 renderMonths();
+checkWarning();
 </script>
 </body>
 </html>
